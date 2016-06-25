@@ -13,7 +13,7 @@ double deviation(matrix a, matrix b){
   return dev;
 }
 
-void sort(matrix &mat, matrix &vec){
+void sortby(matrix &mat, matrix &vec){
     imat numers(vec.nrows());
     matrix vec_temp = vec;
     for(int i = 0; i < vec.nrows(); i++){
@@ -55,6 +55,9 @@ class NelderMeadOptimizer {
           this->termination_distance = termination_distance;
       }
       
+      void sort(){
+        sortby(vectors, values);
+      }
       
       // termination criteria: each pair of vectors in the simplex has to
       // have a distance of at most `termination_distance`
@@ -62,14 +65,22 @@ class NelderMeadOptimizer {
           if (vectors.nrows() < dimension) {
               return false;
           }
+          double dev = 100000;
+          double maxdev = -100000;
           for (int i=0; i<dimension+1; i++) {
               for (int j=0; j<dimension+1; j++) {
                   if (i==j) continue;
-                  if (deviation(vectors.row(i), vectors.row(j)) > termination_distance) {
+                  dev = deviation(vectors.row(i), vectors.row(j));
+                  if(dev > maxdev){
+                    maxdev = dev;
+                  }
+                  if (dev > termination_distance) {
+                      cout << maxdev << endl;
                       return false;
                   }
               }
           }
+          
           return true;
       }
       
@@ -108,7 +119,7 @@ class NelderMeadOptimizer {
       
     }
         
-    matrix step(matrix vec, double score) {
+    matrix step(matrix vec, double score, int &newmax) {
             
       matrix returned;
       
@@ -122,7 +133,7 @@ class NelderMeadOptimizer {
         }
         else{
           feed ++;
-          sort(vectors, values);
+          sort();
           returned = reflect();
         }
 
@@ -136,18 +147,21 @@ class NelderMeadOptimizer {
               cout << "Intermediate" << endl;
               vectors.row_sub(reflected, 0);
               values(0) = score;
-              sort(vectors, values);
+              sort();
               returned = reflect();
+              newmax = 0;
           } else if (score > values(dimension)) {
               cout << "Best" << endl;
               vectors.row_sub(reflected, 0);
               values(0) = score;
               returned = cog + (cog - vectors.row(0))*gamma;
               vectors.row_sub(reflected, 0);
+              newmax = 1;
 
             } else {
               cout << "Worst" << endl;
               returned = cog + (cog - vectors.row(0))*rho;
+              newmax = 0;
             }
         }
         else{
@@ -155,15 +169,16 @@ class NelderMeadOptimizer {
             cout << "Double step improved" <<endl;
             values(0) = score;
             vectors.row_sub(vec, 0);
-            sort(vectors, values);
+            sort();
             reflected = reflect();
             returned = reflected;
           } else{
             if(values(0) > values(1)){
               cout << "Too far" << endl;
-                sort(vectors, values);
+                sort();
                 reflected = reflect();
                 returned = reflected;
+                newmax = 0;
             } else {
               cout << "Shrink!!!" << endl;
                 feed = 1;

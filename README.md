@@ -4,6 +4,8 @@ Fork of Sebastian Morr <sebastian@morr.cc> Nelder Mead Optimizer.
 
 Flexible Nelder-Mead-Optimizer with a simple interface, extended for use with custom matrix library.
 
+TODO: display maximum deviation.
+
 License
 -------
 
@@ -13,4 +15,4 @@ This software is distributed in the hope that it will be useful, but WITHOUT ANY
 
 See LICENSE file for a copy of the GNU General Public License.
 
-Copyright (C) 2016 Jay Kahn <rjaykahn@umich.edu> 
+Copyright (C) 2016 Jay Kahn <rjaykahn@umich.edu>
