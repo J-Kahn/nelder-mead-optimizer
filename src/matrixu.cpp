@@ -749,12 +749,49 @@ matrix inv(matrix B){
     return (det);
 }*/
 
-void Swap(double& a, double& b)
+void swap(int i,int j, double *a){
+    int temp = a[i];
+    a[i] = a[j];
+    a[j] = temp;
+}
+
+
+void quicksort2(double *arr, int left, int right){
+    int min = (left+right)/2;
+    cout<<"QS:"<<left<<","<<right<<"\n";
+
+    int i = left;
+    int j = right;
+    double pivot = arr[min];
+
+    while(left<j || i<right)
+    {
+        while(arr[i]<pivot)
+        i++;
+        while(arr[j]>pivot)
+        j--;
+
+        if(i<=j){
+            swap(i,j,arr);
+            i++;
+            j--;
+        }
+        else{
+            if(left<j)
+                quicksort2(arr, left, j);
+            if(i<right)
+                quicksort2(arr,i,right);
+            return;
+        }
+    }
+}
+
+/*void Swap(double& a, double& b)
 {
   double temp = a;
   a = b;
   b = temp;
-}
+}*/
 
 /*
  * returns the inverse of matrix a

@@ -1509,4 +1509,6 @@ struct ord{
 void quickOrderi(double* p1, int* p2, int left, int right);
 ord quickOrder(matrix arrr, imat orders, int left, int right);
 void quickSort(double* p1, int left, int right);
+void quicksort2(double* p1, int left, int right);
+
 #endif
