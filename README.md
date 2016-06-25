@@ -1,31 +1,8 @@
 Description
 -----------
+Fork of Sebastian Morr <sebastian@morr.cc> Nelder Mead Optimizer.
 
-Flexible Nelder-Mead-Optimizer with a simple interface.
-
-- Comes with a small test suite that ensures correct behaviour
-- Templatable to vectors of arbitrary dimension
-
-Usage
------
-
-    float precision = 0.001;
-    int dimension = 2;
-    NelderMeadOptimizer o(dimension, precision);
-
-    // request a simplex to start with
-    Vector v(0.5, 0.5);
-    o.insert(v);
-    o.insert(Vector(0.1, 0.1));
-    o.insert(Vector(0.2, 0.7));
-    
-    while (!o.done()) {
-        v = o.step(v, f(v));
-    }
-
-See `t/test.cpp` for more examples. 
-
-The optimizer works with float values. It is `done()` when each pair of candidates is at most `precision` away from each other.
+Flexible Nelder-Mead-Optimizer with a simple interface, extended for use with custom matrix library.
 
 License
 -------
@@ -36,4 +13,4 @@ This software is distributed in the hope that it will be useful, but WITHOUT ANY
 
 See LICENSE file for a copy of the GNU General Public License.
 
-Copyright (C) 2013  Sebastian Morr <sebastian@morr.cc>
+Copyright (C) 2016 Jay Kahn <rjaykahn@umich.edu> 
