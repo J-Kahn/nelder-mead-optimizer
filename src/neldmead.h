@@ -141,7 +141,7 @@ class NelderMeadOptimizer {
       else{
         matrix reflected = reflect();
 
-        if(deviation(reflected, vec) < 1e-12){
+        if(deviation(reflected, vec) == 0.0){
           
           if (score > values(1) && score < values(dimension)) {
               cout << "Intermediate" << endl;
